@@ -1,7 +1,7 @@
 ---
 title: Markdown 写作小抄
 description: 常用 Markdown 语法速查：标题、列表、代码块、引用、表格与链接。
-pubDate: 2026-09-07
+pubDate: 2026-01-02
 tags:
   - Markdown
   - 写作

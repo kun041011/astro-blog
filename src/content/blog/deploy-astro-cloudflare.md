@@ -1,7 +1,7 @@
 ---
 title: 用 Astro 搭建博客并部署到 Cloudflare Pages
 description: 从零到线上：一套零服务器、零运维、push 即自动发布的博客方案。
-pubDate: 2026-09-08
+pubDate: 2026-01-10
 tags:
   - Astro
   - Cloudflare Pages

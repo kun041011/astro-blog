@@ -1,7 +1,7 @@
 ---
 title: 欢迎来到我的博客
 description: 第一篇文章：介绍本站的定位，以及如何快速添加一篇新文章。
-pubDate: 2026-09-09
+pubDate: 2026-01-06
 tags:
   - 博客
   - 指南
@@ -17,7 +17,7 @@ tags:
 ---
 title: 文章的标题
 description: 一段用于首页摘要与 SEO 的简介。
-pubDate: 2026-09-09
+pubDate: 2026-01-06
 tags:
   - 博客
   - 指南
