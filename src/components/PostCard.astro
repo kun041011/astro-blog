@@ -13,12 +13,14 @@ const { title, description, pubDate, tags } = post.data;
 
 <article class="post-card">
   <a class="post-card-link" href={`/posts/${postSlug(post.id)}/`}>
-    <h3>{title}</h3>
-    {
-      description && (
-        <p class="post-card-desc">{description}</p>
-      )
-    }
+    <div>
+      <h3>{title}</h3>
+      {
+        description && (
+          <p class="post-card-desc">{description}</p>
+        )
+      }
+    </div>
   </a>
   <div class="post-card-meta">
     <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>

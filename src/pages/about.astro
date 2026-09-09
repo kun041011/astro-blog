@@ -4,24 +4,31 @@ import { SITE } from '../consts';
 ---
 
 <BaseLayout title="关于" description={`关于 ${SITE.title}`}>
-  <h1 class="page-title">关于我</h1>
-  <div class="prose content-body">
-    <p>
-      欢迎来到{SITE.title}。这里是关于页面，你可以在这里介绍自己：你是谁、
-      在做什么、为什么写博客。
-    </p>
-
-    <h2>写些什么</h2>
-    <ul>
-      <li>技术笔记与踩坑记录</li>
-      <li>读书心得与生活随笔</li>
-      <li>工具与效率方法分享</li>
-    </ul>
-
-    <h2>联系方式</h2>
-    <p>
-      把这段文字替换成你的邮箱、GitHub、社交媒体链接等。修改本页面对应的源文件：
-      <code>src/pages/about.astro</code>。
-    </p>
-  </div>
+  <section class="about-intro">
+    <div class="about-copy prose">
+      <p class="eyebrow">关于</p>
+      <h1>把学习与工程，变成可复盘的记录。</h1>
+      <p>
+        我是张煜坤，拥有数据科学与大数据技术专业背景。这里记录从课程、竞赛到实习中真正遇到的问题，也记录我如何验证假设、做出取舍并把方案落地。
+      </p>
+      <h2>持续关注</h2>
+      <ul class="focus-list">
+        <li><strong>AI 应用</strong><span>Agent、RAG、Prompt 工程与可靠性</span></li>
+        <li><strong>数据工程</strong><span>数据采集、存储、治理与服务交付</span></li>
+        <li><strong>工程实践</strong><span>Python 服务、容器化部署与系统复盘</span></li>
+      </ul>
+      <p>
+        不追逐表面的热度。每一篇文章都希望留下可检查的思考路径，让之后的自己和读者都能看懂当时的判断。
+      </p>
+    </div>
+    <figure class="about-visual">
+      <img
+        src="/about-still-life.png"
+        width="1122"
+        height="1536"
+        alt="深蓝桌面上的方格笔记本与金属工具"
+        loading="lazy"
+      />
+    </figure>
+  </section>
 </BaseLayout>

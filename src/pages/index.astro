@@ -7,17 +7,56 @@ import { SITE } from '../consts';
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+const tagCounts = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.data.tags) {
+    tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+  }
+}
+const featuredTags = [...tagCounts.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 7);
 ---
 
 <BaseLayout>
-  <section class="hero">
-    <p class="eyebrow">Blog</p>
-    <h1>{SITE.title}</h1>
-    <p class="tagline">{SITE.description}</p>
+  <section class="hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">张煜坤的技术档案</p>
+      <h1>把问题做成可以交付的系统。</h1>
+      <p class="tagline">聚焦 AI Agent、数据工程与真实项目复盘，记录从问题拆解到上线交付的过程。</p>
+      <a class="btn" href="#writing">查看最新文章</a>
+    </div>
+    <figure class="hero-visual">
+      <img
+        src="/hero-still-life.png"
+        width="1536"
+        height="1024"
+        alt="深蓝色背景中的金属与亚克力几何装置"
+        fetchpriority="high"
+      />
+    </figure>
   </section>
 
-  <section aria-label="文章列表">
-    <h2 class="section-title">最新文章</h2>
+  {
+    featuredTags.length > 0 && (
+      <nav class="topic-index" aria-label="文章主题">
+        <span>写作主题</span>
+        <div>
+          {featuredTags.map(([tag, count]) => (
+            <a href={`/tags/${encodeURIComponent(tag)}/`}>
+              #{tag} <small>{count}</small>
+            </a>
+          ))}
+        </div>
+      </nav>
+    )
+  }
+
+  <section id="writing" class="home-writing" aria-label="文章列表">
+    <header class="section-heading">
+      <h2>最近写作</h2>
+      <p>从项目复盘到 Agent 学习，所有笔记都来自正在推进的问题。</p>
+    </header>
     {
       posts.length === 0 ? (
         <p class="empty">

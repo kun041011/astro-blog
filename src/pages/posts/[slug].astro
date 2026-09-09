@@ -32,7 +32,7 @@ const newer = index > 0 ? sorted[index - 1] : undefined;
     <header class="post-header">
       <p class="post-meta">
         <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
-        {' · 阅读约 '}{minutes}{' 分钟'}
+        <span aria-hidden="true"> / </span>阅读约 {minutes} 分钟
       </p>
       <h1>{title}</h1>
       {
@@ -42,7 +42,7 @@ const newer = index > 0 ? sorted[index - 1] : undefined;
       }
       {
         tags.length > 0 && (
-          <ul class="tag-list" style="margin-top: 1rem;">
+          <ul class="tag-list post-tags">
             {
               tags.map((tag) => (
                 <li>
@@ -61,8 +61,20 @@ const newer = index > 0 ? sorted[index - 1] : undefined;
       <Content />
     </div>
 
+    <script>
+      document.querySelectorAll<HTMLTableElement>(".prose table").forEach((table) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "table-scroll";
+        wrapper.tabIndex = 0;
+        wrapper.setAttribute("role", "region");
+        wrapper.setAttribute("aria-label", "文章表格，可横向滚动查看");
+        table.before(wrapper);
+        wrapper.append(table);
+      });
+    </script>
+
     <footer class="post-foot">
-      <p class="post-back"><a href="/">← 返回首页</a></p>
+      <p class="post-back"><a href="/">返回全部文章</a></p>
       <nav class="pager" aria-label="文章导航">
         {
           older ? (
@@ -77,9 +89,8 @@ const newer = index > 0 ? sorted[index - 1] : undefined;
         {
           newer && (
             <a
-              class="pager-item"
+              class="pager-item pager-item-next"
               href={`/posts/${postSlug(newer.id)}/`}
-              style="text-align: right;"
             >
               <span>下一篇</span>
               {newer.data.title}
