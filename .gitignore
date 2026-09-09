@@ -1,0 +1,14 @@
+# 依赖
+node_modules/
+
+# Astro 构建产物
+dist/
+.astro/
+
+# 环境与系统文件
+.env
+.env.*
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*

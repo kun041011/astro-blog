@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../consts';
+---
+
+<BaseLayout title="关于" description={`关于 ${SITE.title}`}>
+  <h1 class="page-title">关于我</h1>
+  <div class="prose content-body">
+    <p>
+      欢迎来到{SITE.title}。这里是关于页面，你可以在这里介绍自己：你是谁、
+      在做什么、为什么写博客。
+    </p>
+
+    <h2>写些什么</h2>
+    <ul>
+      <li>技术笔记与踩坑记录</li>
+      <li>读书心得与生活随笔</li>
+      <li>工具与效率方法分享</li>
+    </ul>
+
+    <h2>联系方式</h2>
+    <p>
+      把这段文字替换成你的邮箱、GitHub、社交媒体链接等。修改本页面对应的源文件：
+      <code>src/pages/about.astro</code>。
+    </p>
+  </div>
+</BaseLayout>

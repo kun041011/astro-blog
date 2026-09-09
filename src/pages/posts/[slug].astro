@@ -1,0 +1,92 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../lib/date';
+import { readingTime } from '../../lib/reading-time';
+import { postSlug } from '../../lib/slug';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: postSlug(post.id) },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, description, pubDate, tags } = post.data;
+const minutes = readingTime(post.body);
+
+const sorted = (
+  await getCollection('blog', ({ data }) => !data.draft)
+).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const index = sorted.findIndex((p) => p.id === post.id);
+// index 越小文章越新：index+1 是上一篇（更旧），index-1 是下一篇（更新）
+const older = index >= 0 ? sorted[index + 1] : undefined;
+const newer = index > 0 ? sorted[index - 1] : undefined;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="post">
+    <header class="post-header">
+      <p class="post-meta">
+        <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+        {' · 阅读约 '}{minutes}{' 分钟'}
+      </p>
+      <h1>{title}</h1>
+      {
+        description && (
+          <p class="post-subtitle">{description}</p>
+        )
+      }
+      {
+        tags.length > 0 && (
+          <ul class="tag-list" style="margin-top: 1rem;">
+            {
+              tags.map((tag) => (
+                <li>
+                  <a class="tag" href={`/tags/${encodeURIComponent(tag)}/`}>
+                    #{tag}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        )
+      }
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <footer class="post-foot">
+      <p class="post-back"><a href="/">← 返回首页</a></p>
+      <nav class="pager" aria-label="文章导航">
+        {
+          older ? (
+            <a class="pager-item" href={`/posts/${postSlug(older.id)}/`}>
+              <span>上一篇</span>
+              {older.data.title}
+            </a>
+          ) : (
+            <span></span>
+          )
+        }
+        {
+          newer && (
+            <a
+              class="pager-item"
+              href={`/posts/${postSlug(newer.id)}/`}
+              style="text-align: right;"
+            >
+              <span>下一篇</span>
+              {newer.data.title}
+            </a>
+          )
+        }
+      </nav>
+    </footer>
+  </article>
+</BaseLayout>

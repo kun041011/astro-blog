@@ -1,0 +1,39 @@
+---
+import { SITE } from '../consts';
+
+const pathname = Astro.url.pathname;
+const nav = [
+  { href: '/', label: '首页' },
+  { href: '/tags/', label: '标签' },
+  { href: '/about/', label: '关于' },
+  { href: '/rss.xml', label: 'RSS' },
+];
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label={SITE.title}>
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">{SITE.title}</span>
+    </a>
+    <nav aria-label="主导航">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'nav-link',
+              {
+                active:
+                  (item.href === '/' && pathname === '/') ||
+                  (item.href !== '/' && pathname.startsWith(item.href)),
+              },
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
