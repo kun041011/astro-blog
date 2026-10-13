@@ -15,140 +15,162 @@ const langs: ResumeLang[] = ['zh', 'en'];
       new URLSearchParams(location.search).get('lang') === 'en' ? 'en' : 'zh';
   </script>
 
-  <div class="resume-page">
-    <div class="resume-toolbar">
-      <div class="resume-langs" role="group" aria-label="Language">
-        <button type="button" data-lang-btn="zh" aria-pressed="true">中文</button>
-        <button type="button" data-lang-btn="en" aria-pressed="false">English</button>
-      </div>
-      <button class="resume-print" type="button" data-print>打印</button>
+  <div class="resume-shell">
+    <div class="language-tabs" role="group" aria-label="Language">
+      <button class="language-tab" type="button" data-lang-btn="zh" aria-pressed="true">中文</button>
+      <button class="language-tab" type="button" data-lang-btn="en" aria-pressed="false">English</button>
     </div>
 
     {
       langs.map((lang) => {
         const copy = resume[lang];
         return (
-          <article class="resume-sheet" data-sheet={lang} lang={lang === 'en' ? 'en' : 'zh-CN'}>
-            <p class="resume-kicker">{copy.eyebrow}</p>
-            <h1>{copy.name}</h1>
-            <p class="resume-alt">{copy.nameAlt}</p>
-            <p class="resume-role">{copy.role}</p>
-            <hr class="resume-rule" />
-            <p class="resume-summary">{copy.summary}</p>
-            <ul class="resume-contacts">
-              {copy.contacts.map((item) => (
-                <li>
-                  <span>{item.label}</span>
+          <article class="resume-panel" data-sheet={lang} lang={lang === 'en' ? 'en' : 'zh-CN'} hidden={lang === 'en'}>
+            <section class="resume-page page-one">
+              <header class="resume-head">
+                <div>
+                  <p class="resume-kicker">{copy.eyebrow}</p>
+                  <h1>{copy.name}</h1>
+                  <p class="alt-name">{copy.nameAlt}</p>
+                </div>
+                <div class="headline-box">
+                  <strong>{copy.role}</strong>
+                </div>
+              </header>
+              <p class="summary-text">{copy.summary}</p>
+              <div class="contact-line">
+                {copy.contacts.map((item) => (
                   <a href={item.href} rel="noopener" target={item.href.startsWith('http') ? '_blank' : undefined}>
+                    <span>{item.label}</span>
                     {item.value}
                   </a>
-                </li>
-              ))}
-            </ul>
-
-            <h2>{copy.strengthsTitle}</h2>
-            <ul class="resume-strengths">
-              {copy.strengths.map((item) => (
-                <li>
-                  <strong>{item.title}</strong>
-                  <p>{item.text}</p>
-                </li>
-              ))}
-            </ul>
-
-            <h2>{copy.experienceTitle}</h2>
-            {copy.jobs.map((job) => (
-              <section class="resume-job">
-                <div class="resume-row">
-                  <strong>{job.org}</strong>
-                  <span class="resume-time">{job.time}</span>
-                </div>
-                <p class="resume-roleline">{job.role}</p>
-                <p class="resume-stack">{job.stack}</p>
-                <ul class="resume-points">
-                  {job.points.map((point) => (
-                    <li>{point}</li>
-                  ))}
-                </ul>
-                {job.href && (
-                  <p>
-                    <a class="resume-more" href={job.href}>
-                      {job.hrefLabel}
-                    </a>
-                  </p>
-                )}
-              </section>
-            ))}
-
-            <h2>{copy.projectsTitle}</h2>
-            <p class="resume-note">{copy.projectsNote}</p>
-            {copy.projects.map((project) => (
-              <section class="resume-project">
-                <div class="resume-row">
-                  <strong>{project.name}</strong>
-                  <span class="resume-time">{project.time}</span>
-                </div>
-                <p class="resume-roleline">{project.role}</p>
-                <p class="resume-stack">{project.stack}</p>
-                <ul class="resume-points">
-                  {project.points.map((point) => (
-                    <li>{point}</li>
-                  ))}
-                </ul>
-                <details class="resume-details">
-                  <summary>{copy.detailsLabel}</summary>
-                  <ul class="resume-points">
-                    {project.details.map((point) => (
-                      <li>{point}</li>
-                    ))}
-                  </ul>
-                  {project.href && (
-                    <p>
-                      <a
-                        class="resume-more"
-                        href={project.href}
-                        rel="noopener"
-                        target={project.href.startsWith('http') ? '_blank' : undefined}
-                      >
-                        {project.hrefLabel}
-                      </a>
-                    </p>
-                  )}
-                </details>
-              </section>
-            ))}
-
-            <h2>{copy.educationTitle}</h2>
-            <section class="resume-edu">
-              <div class="resume-row">
-                <strong>{copy.school}</strong>
-                <span class="resume-time">{copy.eduTime}</span>
+                ))}
               </div>
-              <p class="resume-roleline">{copy.program}</p>
-              <p class="resume-extra">{copy.eduExtra}</p>
-              <p class="resume-courses">{copy.courses}</p>
+
+              <section class="section-block">
+                <h2>{copy.strengthsTitle}</h2>
+                <div class="core-grid">
+                  {copy.strengths.map((item) => (
+                    <div>
+                      <strong>{item.title}</strong>
+                      <span>{item.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section class="section-block">
+                <h2>{copy.experienceTitle}</h2>
+                {copy.jobs.map((job) => (
+                  <div class="experience-item">
+                    <div class="item-head">
+                      <strong>{job.org}</strong>
+                      <time>{job.time}</time>
+                    </div>
+                    <p class="item-role">{job.role}</p>
+                    <ul>
+                      {job.points.map((point) => (
+                        <li>{point}</li>
+                      ))}
+                    </ul>
+                    {job.href && (
+                      <a class="more-link" href={job.href}>
+                        {job.hrefLabel}
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </section>
             </section>
 
-            <h2>{copy.skillsTitle}</h2>
-            <dl class="resume-skills">
-              {copy.skills.map((item) => (
+            <section class="resume-page page-two">
+              <div class="section-title-row">
                 <div>
-                  <dt>{item.label}</dt>
-                  <dd>{item.text}</dd>
+                  <p class="resume-kicker">{lang === 'en' ? 'Selected Work' : 'Selected Work'}</p>
+                  <h2>{copy.projectsTitle}</h2>
                 </div>
-              ))}
-            </dl>
+                <p>{copy.projectsNote}</p>
+              </div>
+              <div class="project-list">
+                {copy.projects.map((project) => (
+                  <details class="project-item">
+                    <summary>
+                      <span class="project-main">
+                        <strong>{project.name}</strong>
+                        <em>{project.role}</em>
+                      </span>
+                      <span class="project-side">
+                        <time>{project.time}</time>
+                        <span class="project-toggle">{copy.detailsLabel}</span>
+                      </span>
+                    </summary>
+                    <div class="project-body">
+                      <p class="tech-text">{project.stack}</p>
+                      <ul>
+                        {project.points.map((point) => (
+                          <li>{point}</li>
+                        ))}
+                      </ul>
+                      {project.details.map((point) => (
+                        <p class="detail-text">{point}</p>
+                      ))}
+                      {project.href && (
+                        <a
+                          class="more-link"
+                          href={project.href}
+                          rel="noopener"
+                          target={project.href.startsWith('http') ? '_blank' : undefined}
+                        >
+                          {project.hrefLabel}
+                        </a>
+                      )}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </section>
 
-            <h2>{copy.honorsTitle}</h2>
-            <ul class="resume-honors">
-              {copy.honors.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
+            <section class="resume-page page-three">
+              <div class="two-column">
+                <section class="section-block">
+                  <h2>{copy.educationTitle}</h2>
+                  <div class="mini-row">
+                    <strong>{copy.school}</strong>
+                    <time>{copy.eduTime}</time>
+                  </div>
+                  <p class="item-role">{copy.program}</p>
+                  <p class="detail-text">{copy.eduExtra}</p>
+                  <p class="detail-text">{copy.courses}</p>
+                </section>
+                <section class="section-block">
+                  <h2>{copy.skillsTitle}</h2>
+                  <div class="skill-list">
+                    {copy.skills.map((item) => (
+                      <p>
+                        <strong>{item.label}</strong>
+                        <span>{item.text}</span>
+                      </p>
+                    ))}
+                  </div>
+                </section>
+              </div>
+              <section class="section-block">
+                <h2>{copy.honorsTitle}</h2>
+                <ul class="compact-list">
+                  {copy.honors.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </section>
+            </section>
           </article>
         );
       })
     }
+
+    <div class="print-row">
+      <button class="print-button" type="button" data-print>打印</button>
+    </div>
   </div>
 </BaseLayout>
 
@@ -157,6 +179,7 @@ const langs: ResumeLang[] = ['zh', 'en'];
 
   const root = document.documentElement;
   const buttons = document.querySelectorAll<HTMLButtonElement>('[data-lang-btn]');
+  const panels = document.querySelectorAll<HTMLElement>('.resume-panel');
   const printButton = document.querySelector<HTMLButtonElement>('[data-print]');
 
   function apply(lang: string) {
@@ -166,8 +189,10 @@ const langs: ResumeLang[] = ['zh', 'en'];
     buttons.forEach((button) => {
       button.setAttribute('aria-pressed', String(button.dataset.langBtn === next));
     });
-    const label = next === 'en' ? resume.en.printLabel : resume.zh.printLabel;
-    if (printButton) printButton.textContent = label;
+    panels.forEach((panel) => {
+      panel.hidden = panel.dataset.sheet !== next;
+    });
+    if (printButton) printButton.textContent = next === 'en' ? resume.en.printLabel : resume.zh.printLabel;
     document.title = next === 'en' ? 'Resume | 张煜坤' : '简历 | 张煜坤';
     const url = new URL(location.href);
     if (next === 'en') url.searchParams.set('lang', 'en');
