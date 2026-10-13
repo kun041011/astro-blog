@@ -109,7 +109,7 @@ html[data-resume-lang='en'] .resume-sheet[data-sheet='en'] {
 }
 
 .resume-role {
-  margin: 0 0 0.25rem;
+  margin: 0 0 0.9rem;
   padding-left: 0.75rem;
   border-left: 3px solid var(--accent);
   color: var(--heading);
@@ -118,17 +118,11 @@ html[data-resume-lang='en'] .resume-sheet[data-sheet='en'] {
   line-height: 1.35;
 }
 
-.resume-meta,
 .resume-note,
 .resume-stack,
 .resume-extra,
 .resume-courses {
   color: var(--muted);
-}
-
-.resume-meta {
-  margin: 0 0 1rem 0.9rem;
-  font-size: 0.95rem;
 }
 
 .resume-rule {

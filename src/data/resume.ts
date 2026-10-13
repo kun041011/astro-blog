@@ -5,7 +5,6 @@ export interface ResumeCopy {
   name: string;
   nameAlt: string;
   role: string;
-  meta: string;
   summary: string;
   contacts: { label: string; value: string; href: string }[];
   strengthsTitle: string;
@@ -65,7 +64,6 @@ export const resume: Record<ResumeLang, ResumeCopy> = {
     name: '张煜坤',
     nameAlt: 'Zhang Yukun',
     role: 'Agent 开发 / LLM 应用',
-    meta: '长春 · 本科在读',
     summary:
       '做 Agent 应用和后端交付。独立实现了并行 Coding Agent 编排服务 Scion，也做过基于 LangChain 的细粒度情感分析服务。实习期间负责舆情监控后端，以及亿级交通数据中台。',
     contacts: [
@@ -195,7 +193,6 @@ export const resume: Record<ResumeLang, ResumeCopy> = {
     name: 'Zhang Yukun',
     nameAlt: '张煜坤',
     role: 'Agent Developer / LLM Applications',
-    meta: 'Changchun · Undergraduate',
     summary:
       'I build agent applications and backend systems. I independently built Scion, a service that runs coding agents in parallel, and a LangChain service for aspect-level sentiment analysis. As an intern I owned a public-opinion backend and a large-scale transportation data platform.',
     contacts: [
