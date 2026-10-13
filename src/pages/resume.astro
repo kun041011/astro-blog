@@ -61,7 +61,7 @@ const langs: ResumeLang[] = ['zh', 'en'];
 
               <section class="section-block">
                 <h2>{copy.experienceTitle}</h2>
-                {copy.jobs.map((job) => (
+                {copy.jobs.slice(0, 1).map((job) => (
                   <div class="experience-item">
                     <div class="item-head">
                       <strong>{job.org}</strong>
@@ -99,13 +99,10 @@ const langs: ResumeLang[] = ['zh', 'en'];
                         <strong>{project.name}</strong>
                         <em>{project.role}</em>
                       </span>
-                      <span class="project-side">
-                        <time>{project.time}</time>
-                        <span class="project-toggle">{copy.detailsLabel}</span>
-                      </span>
+                      <span class="project-toggle">{copy.detailsLabel}</span>
                     </summary>
                     <div class="project-body">
-                      <p class="tech-text">{project.stack}</p>
+                      <p class="tech-text">{project.time} · {project.stack}</p>
                       <ul>
                         {project.points.map((point) => (
                           <li>{point}</li>
@@ -131,18 +128,18 @@ const langs: ResumeLang[] = ['zh', 'en'];
             </section>
 
             <section class="resume-page page-three">
-              <div class="two-column">
-                <section class="section-block">
+              <div class="two-column page-three-top">
+                <section class="section-block tight">
                   <h2>{copy.educationTitle}</h2>
                   <div class="mini-row">
                     <strong>{copy.school}</strong>
+                    <span>{copy.program}</span>
                     <time>{copy.eduTime}</time>
                   </div>
-                  <p class="item-role">{copy.program}</p>
                   <p class="detail-text">{copy.eduExtra}</p>
                   <p class="detail-text">{copy.courses}</p>
                 </section>
-                <section class="section-block">
+                <section class="section-block tight">
                   <h2>{copy.skillsTitle}</h2>
                   <div class="skill-list">
                     {copy.skills.map((item) => (
@@ -153,6 +150,34 @@ const langs: ResumeLang[] = ['zh', 'en'];
                     ))}
                   </div>
                 </section>
+              </div>
+              <div class="section-title-row">
+                <div>
+                  <p class="resume-kicker">Appendix</p>
+                  <h2>{lang === 'en' ? 'Previous Experience and Additions' : '过往经历与补充'}</h2>
+                </div>
+                <button class="print-button" type="button" data-print>{copy.printLabel}</button>
+              </div>
+              <div class="appendix-grid">
+                {copy.jobs.slice(1).map((job) => (
+                  <div class="appendix-card">
+                    <div class="item-head">
+                      <strong>{job.org}</strong>
+                      <time>{job.time}</time>
+                    </div>
+                    <p class="item-role">{job.role}</p>
+                    <ul>
+                      {job.points.map((point) => (
+                        <li>{point}</li>
+                      ))}
+                    </ul>
+                    {job.href && (
+                      <a class="more-link" href={job.href}>
+                        {job.hrefLabel}
+                      </a>
+                    )}
+                  </div>
+                ))}
               </div>
               <section class="section-block">
                 <h2>{copy.honorsTitle}</h2>
@@ -168,20 +193,13 @@ const langs: ResumeLang[] = ['zh', 'en'];
       })
     }
 
-    <div class="print-row">
-      <button class="print-button" type="button" data-print>打印</button>
-    </div>
   </div>
 </BaseLayout>
 
 <script>
-  import { resume } from '../data/resume';
-
   const root = document.documentElement;
   const buttons = document.querySelectorAll<HTMLButtonElement>('[data-lang-btn]');
   const panels = document.querySelectorAll<HTMLElement>('.resume-panel');
-  const printButton = document.querySelector<HTMLButtonElement>('[data-print]');
-
   function apply(lang: string) {
     const next = lang === 'en' ? 'en' : 'zh';
     root.dataset.resumeLang = next;
@@ -192,7 +210,6 @@ const langs: ResumeLang[] = ['zh', 'en'];
     panels.forEach((panel) => {
       panel.hidden = panel.dataset.sheet !== next;
     });
-    if (printButton) printButton.textContent = next === 'en' ? resume.en.printLabel : resume.zh.printLabel;
     document.title = next === 'en' ? 'Resume | 张煜坤' : '简历 | 张煜坤';
     const url = new URL(location.href);
     if (next === 'en') url.searchParams.set('lang', 'en');
@@ -203,6 +220,8 @@ const langs: ResumeLang[] = ['zh', 'en'];
   buttons.forEach((button) => {
     button.addEventListener('click', () => apply(button.dataset.langBtn || 'zh'));
   });
-  printButton?.addEventListener('click', () => window.print());
+  document.querySelectorAll<HTMLButtonElement>('[data-print]').forEach((button) => {
+    button.addEventListener('click', () => window.print());
+  });
   apply(root.dataset.resumeLang === 'en' ? 'en' : 'zh');
 </script>

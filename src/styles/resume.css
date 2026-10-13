@@ -4,19 +4,65 @@
 }
 
 body:has(.resume-shell),
-.site-main:has(.resume-shell) {
-  background: #eee7dc;
+body:has(.resume-shell) .site-main,
+body:has(.resume-shell) .site-footer {
+  background: #fdfdfd;
+  color: #282728;
 }
 
 body:has(.resume-shell) .site-header {
-  border-bottom-color: #ded2bf;
-  background: rgb(238 231 220 / 0.92);
+  position: static;
+  border-bottom: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+body:has(.resume-shell) .header-inner {
+  min-height: 72px;
+  border-bottom: 0.8px solid #ece9e9;
+}
+
+body:has(.resume-shell) .brand {
+  color: #282728;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+body:has(.resume-shell) .brand-mark {
+  display: none;
+}
+
+body:has(.resume-shell) .site-header nav {
+  gap: 1rem;
+}
+
+body:has(.resume-shell) .nav-link {
+  padding: 0.2rem 0;
+  border-radius: 0;
+  background: transparent;
+  color: #282728;
+  font-weight: 500;
 }
 
 body:has(.resume-shell) .nav-link:hover,
 body:has(.resume-shell) .nav-link.active {
-  background: #f1dfd4;
-  color: #9c4f31;
+  background: transparent;
+  color: #282728;
+}
+
+body:has(.resume-shell) .nav-link.active {
+  text-decoration: underline 2px wavy;
+  text-underline-offset: 0.4em;
+}
+
+body:has(.resume-shell) .site-footer {
+  border-top-color: #ece9e9;
+}
+
+body:has(.resume-shell) .footer-inner,
+body:has(.resume-shell) .footer-inner a {
+  color: #67615a;
 }
 
 .resume-shell {
@@ -35,7 +81,14 @@ body:has(.resume-shell) .nav-link.active {
   font-family: "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
 
+.resume-shell p {
+  margin-bottom: 0;
+}
+
 .language-tabs {
+  position: sticky;
+  top: 10px;
+  z-index: 20;
   display: flex;
   width: max-content;
   margin: 0 auto 18px;
@@ -142,9 +195,10 @@ html[data-resume-lang="en"] .resume-panel[data-sheet="en"] {
 }
 
 .headline-box {
-  max-width: 420px;
+  max-width: 360px;
   padding-left: 14px;
   border-left: 3px solid var(--accent);
+  text-align: left;
 }
 
 .headline-box strong {
@@ -237,7 +291,8 @@ html[data-resume-lang="en"] .resume-panel[data-sheet="en"] {
 }
 
 .core-grid strong,
-.skill-list strong {
+.skill-list strong,
+.mini-row strong {
   display: block;
   margin-bottom: 5px;
   color: var(--ink);
@@ -255,6 +310,7 @@ html[data-resume-lang="en"] .resume-panel[data-sheet="en"] {
 
 .experience-item ul,
 .project-body ul,
+.appendix-card ul,
 .compact-list {
   margin: 8px 0 0;
   padding-left: 18px;
@@ -262,6 +318,7 @@ html[data-resume-lang="en"] .resume-panel[data-sheet="en"] {
 
 .experience-item li,
 .project-body li,
+.appendix-card li,
 .compact-list li {
   margin: 5px 0;
   line-height: 1.65;
@@ -295,20 +352,64 @@ html[data-resume-lang="en"] .resume-panel[data-sheet="en"] {
   gap: 18px;
 }
 
+.page-three-top {
+  margin-bottom: 26px;
+}
+
+.page-three-top .section-block,
 .two-column .section-block {
   margin-top: 0;
 }
 
+.tight {
+  margin-top: 24px;
+}
+
+.appendix-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.appendix-card {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--paper-soft);
+}
+
+.appendix-card .item-head {
+  gap: 10px;
+}
+
+.appendix-card p {
+  margin: 0;
+  line-height: 1.62;
+}
+
 .mini-row {
   display: flex;
-  align-items: flex-start;
+  align-items: baseline;
   justify-content: space-between;
   gap: 12px;
 }
 
 .mini-row strong {
+  flex: none;
+  margin-bottom: 0;
   color: var(--ink);
   font-size: 16px;
+}
+
+.mini-row span {
+  flex: 1;
+  min-width: 8em;
+}
+
+.mini-row time {
+  flex: none;
+  white-space: nowrap;
 }
 
 .project-list {
@@ -484,8 +585,22 @@ html[data-resume-lang="en"] .resume-panel[data-sheet="en"] {
   }
 
   .two-column,
-  .core-grid {
+  .appendix-grid {
     grid-template-columns: 1fr;
+  }
+
+  .core-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .core-grid div {
+    padding: 9px;
+  }
+
+  .core-grid span {
+    font-size: 12px;
+    line-height: 1.45;
   }
 
   .resume-head h1 {
@@ -535,7 +650,7 @@ html[data-resume-lang="en"] .resume-panel[data-sheet="en"] {
   .site-header,
   .site-footer,
   .language-tabs,
-  .print-row {
+  .print-button {
     display: none !important;
   }
 

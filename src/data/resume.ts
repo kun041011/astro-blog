@@ -60,7 +60,7 @@ const contacts = {
 
 export const resume: Record<ResumeLang, ResumeCopy> = {
   zh: {
-    eyebrow: '在线简历',
+    eyebrow: 'Online Resume',
     name: '张煜坤',
     nameAlt: 'Zhang Yukun',
     role: 'Python 开发 / Agent 开发',
