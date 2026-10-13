@@ -65,7 +65,7 @@ export const resume: Record<ResumeLang, ResumeCopy> = {
     nameAlt: 'Zhang Yukun',
     role: 'Python 开发 / Agent 开发',
     summary:
-      'Python 开发，方向是 Agent。用 asyncio、FastAPI 和 git worktree 并行跑多个 CLI Agent，再做分支对比和合并。情感分析、舆情采集和亿级交通数据中台，也是同一套 Python 服务交付。',
+      'Python 开发出身，聚焦 Agent 工程化。擅长通过并行执行、分支隔离、对比合并、结构化输出与结果复查，提升 Agent 在真实编码任务中的稳定性和可交付性。',
     contacts: [
       { label: '邮箱', ...contacts.email },
       { label: '电话', ...contacts.phone },
@@ -209,7 +209,7 @@ export const resume: Record<ResumeLang, ResumeCopy> = {
     nameAlt: '张煜坤',
     role: 'Python Developer / Agent Developer',
     summary:
-      'Python developer, focused on agents. asyncio, FastAPI, and git worktrees run several CLI agents in parallel, then compare and merge their branches. Sentiment analysis, public-opinion collection, and a hundred-million-scale transportation platform were the same kind of Python service work.',
+      'Python development background, focused on agent engineering. Parallel execution, branch isolation, compare-and-merge, structured output, and result review make agents more stable and deliverable on real coding work.',
     contacts: [
       { label: 'Email', ...contacts.email },
       { label: 'Phone', ...contacts.phone },
