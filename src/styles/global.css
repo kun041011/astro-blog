@@ -246,6 +246,22 @@ img {
   transform: translateY(0) scale(0.98);
 }
 
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.btn.btn-ghost {
+  background: transparent;
+  color: var(--accent-strong);
+}
+
+.btn.btn-ghost:hover {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
 .hero-visual,
 .about-visual {
   overflow: hidden;
@@ -816,6 +832,8 @@ img {
   }
 
   .site-header nav {
+    flex-wrap: wrap;
+    justify-content: flex-end;
     gap: 0;
   }
 

@@ -1,0 +1,184 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { resume, type ResumeLang } from '../data/resume';
+import '../styles/resume.css';
+
+const langs: ResumeLang[] = ['zh', 'en'];
+---
+
+<BaseLayout
+  title="简历"
+  description="张煜坤的在线简历：Agent 开发、LLM 应用，以及后端与数据实习经历。"
+>
+  <script is:inline slot="head">
+    document.documentElement.dataset.resumeLang =
+      new URLSearchParams(location.search).get('lang') === 'en' ? 'en' : 'zh';
+  </script>
+
+  <div class="resume-page">
+    <div class="resume-toolbar">
+      <div class="resume-langs" role="group" aria-label="Language">
+        <button type="button" data-lang-btn="zh" aria-pressed="true">中文</button>
+        <button type="button" data-lang-btn="en" aria-pressed="false">English</button>
+      </div>
+      <button class="resume-print" type="button" data-print>打印</button>
+    </div>
+
+    {
+      langs.map((lang) => {
+        const copy = resume[lang];
+        return (
+          <article class="resume-sheet" data-sheet={lang} lang={lang === 'en' ? 'en' : 'zh-CN'}>
+            <p class="resume-kicker">{copy.eyebrow}</p>
+            <h1>{copy.name}</h1>
+            <p class="resume-alt">{copy.nameAlt}</p>
+            <p class="resume-role">{copy.role}</p>
+            <p class="resume-meta">{copy.meta}</p>
+            <hr class="resume-rule" />
+            <p class="resume-summary">{copy.summary}</p>
+            <ul class="resume-contacts">
+              {copy.contacts.map((item) => (
+                <li>
+                  <span>{item.label}</span>
+                  <a href={item.href} rel="noopener" target={item.href.startsWith('http') ? '_blank' : undefined}>
+                    {item.value}
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <h2>{copy.strengthsTitle}</h2>
+            <ul class="resume-strengths">
+              {copy.strengths.map((item) => (
+                <li>
+                  <strong>{item.title}</strong>
+                  <p>{item.text}</p>
+                </li>
+              ))}
+            </ul>
+
+            <h2>{copy.experienceTitle}</h2>
+            {copy.jobs.map((job) => (
+              <section class="resume-job">
+                <div class="resume-row">
+                  <strong>{job.org}</strong>
+                  <span class="resume-time">{job.time}</span>
+                </div>
+                <p class="resume-roleline">{job.role}</p>
+                <p class="resume-stack">{job.stack}</p>
+                <ul class="resume-points">
+                  {job.points.map((point) => (
+                    <li>{point}</li>
+                  ))}
+                </ul>
+                {job.href && (
+                  <p>
+                    <a class="resume-more" href={job.href}>
+                      {job.hrefLabel}
+                    </a>
+                  </p>
+                )}
+              </section>
+            ))}
+
+            <h2>{copy.projectsTitle}</h2>
+            <p class="resume-note">{copy.projectsNote}</p>
+            {copy.projects.map((project) => (
+              <section class="resume-project">
+                <div class="resume-row">
+                  <strong>{project.name}</strong>
+                  <span class="resume-time">{project.time}</span>
+                </div>
+                <p class="resume-roleline">{project.role}</p>
+                <p class="resume-stack">{project.stack}</p>
+                <ul class="resume-points">
+                  {project.points.map((point) => (
+                    <li>{point}</li>
+                  ))}
+                </ul>
+                <details class="resume-details">
+                  <summary>{copy.detailsLabel}</summary>
+                  <ul class="resume-points">
+                    {project.details.map((point) => (
+                      <li>{point}</li>
+                    ))}
+                  </ul>
+                  {project.href && (
+                    <p>
+                      <a
+                        class="resume-more"
+                        href={project.href}
+                        rel="noopener"
+                        target={project.href.startsWith('http') ? '_blank' : undefined}
+                      >
+                        {project.hrefLabel}
+                      </a>
+                    </p>
+                  )}
+                </details>
+              </section>
+            ))}
+
+            <h2>{copy.educationTitle}</h2>
+            <section class="resume-edu">
+              <div class="resume-row">
+                <strong>{copy.school}</strong>
+                <span class="resume-time">{copy.eduTime}</span>
+              </div>
+              <p class="resume-roleline">{copy.program}</p>
+              <p class="resume-extra">{copy.eduExtra}</p>
+              <p class="resume-courses">{copy.courses}</p>
+            </section>
+
+            <h2>{copy.skillsTitle}</h2>
+            <dl class="resume-skills">
+              {copy.skills.map((item) => (
+                <div>
+                  <dt>{item.label}</dt>
+                  <dd>{item.text}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <h2>{copy.honorsTitle}</h2>
+            <ul class="resume-honors">
+              {copy.honors.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </article>
+        );
+      })
+    }
+  </div>
+</BaseLayout>
+
+<script>
+  import { resume } from '../data/resume';
+
+  const root = document.documentElement;
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-lang-btn]');
+  const printButton = document.querySelector<HTMLButtonElement>('[data-print]');
+
+  function apply(lang: string) {
+    const next = lang === 'en' ? 'en' : 'zh';
+    root.dataset.resumeLang = next;
+    root.lang = next === 'en' ? 'en' : 'zh-CN';
+    buttons.forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.langBtn === next));
+    });
+    const label = next === 'en' ? resume.en.printLabel : resume.zh.printLabel;
+    if (printButton) printButton.textContent = label;
+    document.title = next === 'en' ? 'Resume | 张煜坤' : '简历 | 张煜坤';
+    const url = new URL(location.href);
+    if (next === 'en') url.searchParams.set('lang', 'en');
+    else url.searchParams.delete('lang');
+    history.replaceState(null, '', url);
+  }
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => apply(button.dataset.langBtn || 'zh'));
+  });
+  printButton?.addEventListener('click', () => window.print());
+  apply(root.dataset.resumeLang === 'en' ? 'en' : 'zh');
+</script>
